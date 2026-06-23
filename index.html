@@ -1136,12 +1136,14 @@
     });
   }
 
-  // 피커 외부 클릭 시 닫기
-  document.addEventListener('click', function() {
-    var m = document.getElementById('monthPickerDropdown');
-    var d = document.getElementById('datePickerCalendar');
-    if (m) m.classList.add('hidden');
-    if (d) d.classList.add('hidden');
+  // 피커 외부 클릭 시 닫기 (내부 클릭은 닫히지 않도록 contains 체크)
+  document.addEventListener('click', function(e) {
+    var m    = document.getElementById('monthPickerDropdown');
+    var d    = document.getElementById('datePickerCalendar');
+    var wBtn = document.getElementById('weddingDateBtn');
+    var vBtn = document.getElementById('visitDateBtn');
+    if (m && !m.contains(e.target) && !(wBtn && wBtn.contains(e.target))) m.classList.add('hidden');
+    if (d && !d.contains(e.target) && !(vBtn && vBtn.contains(e.target))) d.classList.add('hidden');
   });
 </script>
 
