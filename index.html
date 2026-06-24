@@ -433,12 +433,12 @@
           <span class="rounded-full px-5 py-1.5 text-xs font-bold" style="background:#FFF0F3; color:#F0556E; border:1px solid #FFBCC8;">Gift 02</span>
         </div>
         <div class="px-8 pt-4 pb-3 text-center">
-          <h3 class="font-extrabold text-gray-900 text-lg leading-snug">웨딩너머 결혼 시 쓸 수 있는<br/>웨딩포인트 최대 <span style="color:#F0556E;">140만원</span> 증정</h3>
+          <h3 class="font-extrabold text-gray-900 text-lg leading-snug">웨딩비용 결제 시 현금처럼 쓸 수 있는<br/>웨딩포인트 최대 <span style="color:#F0556E;">14만원</span> 증정</h3>
         </div>
         <div class="mx-6 rounded-2xl overflow-hidden">
           <img src="images/gift02.png" alt="웨딩포인트" class="w-full" />
         </div>
-        <p class="px-8 py-4 text-xs text-center" style="color:#aaa;">*웨딩포인트는 스드메 등 다양한 웨딩비용 결제 시 사용가능합니다.</p>
+        <p class="px-8 py-4 text-xs text-center" style="color:#aaa;">*웨딩포인트는 스드메 등 다양한 웨딩비용 결제 시 사용가능합니다</p>
       </div>
 
       <!-- Gift 03 -->
@@ -452,7 +452,6 @@
         <div class="mx-6 rounded-2xl overflow-hidden">
           <img src="images/gift03.png" alt="스드메 할인" class="w-full" />
         </div>
-        <p class="px-8 py-4 text-xs text-center" style="color:#aaa;">*일부 업체에서 제공되는 박람회 전용 특가 혜택입니다.</p>
       </div>
 
       <!-- Gift 04 -->
@@ -466,7 +465,6 @@
         <div class="mx-6 rounded-2xl overflow-hidden">
           <img src="images/gift04.png" alt="혼수 상품권" class="w-full" />
         </div>
-        <p class="px-8 py-4 text-xs text-center" style="color:#aaa;">*한복, 예물, 예복 계약 시 현금처럼 사용 가능한 21만원 상당 혼수 상품권입니다.</p>
       </div>
 
       <!-- Gift 05 -->
@@ -840,20 +838,20 @@
 
   // ─── 박람회 날짜 자동 계산 ───────────────────────────────────────
   function getEventDates() {
-    const now = new Date();
+    const now  = new Date();
     const day  = now.getDay();
     const hour = now.getHours();
     let daysUntilSat = (6 - day + 7) % 7;
     if (daysUntilSat === 0) daysUntilSat = 7;
-    if (day === 5 && hour >= 12) daysUntilSat += 7;
+    if (day === 5 && hour >= 12) daysUntilSat += 7; // 금요일 12시부터 다음 회차로 전환
     const sat = new Date(now);
     sat.setDate(now.getDate() + daysUntilSat);
     sat.setHours(0, 0, 0, 0);
-    const sun = new Date(sat);
-    sun.setDate(sat.getDate() + 1);
+    const sun2 = new Date(sat);
+    sun2.setDate(sat.getDate() + 8); // 2주 범위: 첫 토요일 ~ 둘째 주 일요일
     const DN = ['(일)','(월)','(화)','(수)','(목)','(금)','(토)'];
     const f  = d => `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
-    return `${f(sat)}${DN[sat.getDay()]} ~ ${f(sun)}${DN[sun.getDay()]}`;
+    return `${f(sat)}${DN[sat.getDay()]} ~ ${f(sun2)}${DN[sun2.getDay()]}`;
   }
   document.getElementById('eventDate').textContent = getEventDates();
 
