@@ -1096,7 +1096,7 @@
   var _utmParams = (function() {
     var p = new URLSearchParams(window.location.search);
     return {
-      ct: p.get('utm_content') || ''
+      ct: p.get('ct') || ''
     };
   })();
 
