@@ -1092,6 +1092,14 @@
 
   var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzI9bWJ0Ekd8rE5tFgcNMzkOSepIOKa2UK4mvOcBqzjhaY2Gv1Q63s2aCiNKwzk2iisVg/exec';
 
+  // UTM 파라미터 추출
+  var _utmParams = (function() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      ct: p.get('utm_content') || ''
+    };
+  })();
+
   function isConsecutiveDigits(s) {
     return /^(.)\1{3}$/.test(s); // 동일 숫자 반복 (1111, 0000, 9999)
   }
@@ -1119,7 +1127,8 @@
         phone: phone,
         weddingDate: _weddingVal,
         visitDate: _visitVal,
-        marketing: mkt ? '동의' : '미동의'
+        marketing: mkt ? '동의' : '미동의',
+        ct: _utmParams.ct
       })
     }).then(function() {
       btn.textContent = '신청 완료 ✓';
