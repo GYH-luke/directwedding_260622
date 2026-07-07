@@ -10,3 +10,4 @@ Key reminders:
 - Partner strip images are referenced from `images/partners-*.png`.
 - Mobile layouts must avoid being covered by the floating bottom CTA.
 - Remaining team counts are synced through `syncRemain(val)`.
+- After any file edit, ask the user whether to commit and push the changes.

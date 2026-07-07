@@ -467,6 +467,24 @@
         text-align: left;
       }
     }
+
+    .registration-pre-card {
+      border: 1px solid rgba(255,143,163,0.18);
+      background: linear-gradient(135deg, rgba(240,85,110,0.12), rgba(255,255,255,0.035));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .registration-pre-check {
+      width: 1.05rem;
+      height: 1.05rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      color: #FFB3C1;
+      background: rgba(255,143,163,0.11);
+      border: 1px solid rgba(255,143,163,0.24);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body class="bg-white text-gray-900 overflow-x-hidden">
@@ -1044,6 +1062,36 @@
 ========================================================= -->
 <section id="registration" class="py-24" style="background:#1A0610;">
   <div class="max-w-lg mx-auto px-6">
+
+    <div class="registration-pre-card rounded-3xl p-6 mb-7 text-white">
+      <p class="uppercase tracking-[0.22em] mb-3" style="color:rgba(255,179,193,0.72); font-size:0.62rem; font-weight:700;">PRE-REGISTRATION</p>
+      <h2 class="font-extrabold leading-tight mb-3" style="font-size:clamp(1.9rem, 8vw, 2.5rem); letter-spacing:0;">
+        30초면 끝나는<br/>사전등록
+      </h2>
+      <p class="text-sm leading-relaxed mb-5" style="color:rgba(255,255,255,0.58);">
+        결혼준비 가이드북 무료 증정 +<br/>35만 원 상당 혜택을 챙겨가세요.
+      </p>
+      <div class="grid grid-cols-1 gap-2.5 text-xs font-bold" style="color:rgba(255,255,255,0.68);">
+        <p class="flex items-center gap-2">
+          <span class="registration-pre-check">
+            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
+          </span>
+          입장료 무료
+        </p>
+        <p class="flex items-center gap-2">
+          <span class="registration-pre-check">
+            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
+          </span>
+          계약 강요 없음
+        </p>
+        <p class="flex items-center gap-2">
+          <span class="registration-pre-check">
+            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
+          </span>
+          개인정보 안전 보호
+        </p>
+      </div>
+    </div>
 
     <div class="text-center mb-8">
       <p class="blink font-bold mb-4" style="color:#FF8FA3; font-size:0.9rem;">🚨 잔여 좌석이 얼마 남지 않았습니다.</p>
