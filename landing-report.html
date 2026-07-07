@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>다이렉트결혼준비 랜딩페이지 개선 보고서</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #0f0f13;
+      color: #1a1a2e;
+    }
+
+    /* ── 슬라이드 컨테이너 ── */
+    .slide {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto 2px;
+      min-height: 540px;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* ── 슬라이드 타입별 배경 ── */
+    .slide-cover   { background: linear-gradient(135deg, #1A0610 0%, #2D0F1E 60%, #1A0610 100%); }
+    .slide-toc     { background: #ffffff; }
+    .slide-dark    { background: #1A0610; }
+    .slide-light   { background: #FFF5F7; }
+    .slide-white   { background: #ffffff; }
+    .slide-pink    { background: linear-gradient(135deg, #F0556E 0%, #FF7A8F 100%); }
+
+    /* ── 공통 레이아웃 ── */
+    .slide-inner {
+      padding: 52px 64px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── 슬라이드 번호 ── */
+    .slide-num {
+      position: absolute;
+      bottom: 20px;
+      right: 28px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      opacity: 0.35;
+    }
+
+    /* ── 커버 ── */
+    .cover-badge {
+      display: inline-block;
+      background: rgba(240,85,110,0.18);
+      border: 1px solid rgba(240,85,110,0.4);
+      color: #FF8FA3;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .cover-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .cover-title span { color: #FF8FA3; }
+    .cover-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+    }
+    .cover-meta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .cover-meta-item {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.06em;
+    }
+    .cover-deco {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,85,110,0.15) 0%, transparent 70%);
+    }
+
+    /* ── 섹션 헤더 ── */
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      opacity: 0.55;
+      margin-bottom: 32px;
+    }
+
+    /* ── TOC ── */
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .toc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: #FFF5F7;
+      border: 1px solid #FFD6DE;
+    }
+    .toc-num {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #FFB3C1;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .toc-label { font-size: 0.82rem; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+    .toc-sub   { font-size: 0.72rem; color: #888; line-height: 1.5; }
+
+    /* ── 비교 테이블 ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .compare-table thead th {
+      padding: 10px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+    }
+    .compare-table thead th:first-child { color: #888; background: #f5f5f5; border-radius: 10px 0 0 0; }
+    .compare-table thead th:nth-child(2){ color: #888; background: #f0f0f0; }
+    .compare-table thead th:last-child  { color: #F0556E; background: #FFF0F3; border-radius: 0 10px 0 0; }
+    .compare-table tbody tr { border-bottom: 1px solid #f0f0f0; }
+    .compare-table tbody td {
+      padding: 12px 16px;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .compare-table tbody td:first-child { font-weight: 700; color: #444; font-size: 0.78rem; white-space: nowrap; }
+    .compare-table tbody td:nth-child(2){ color: #888; }
+    .compare-table tbody td:last-child  { color: #1a1a2e; font-weight: 500; }
+    .badge-del  { display: inline-block; background: #f5f5f5; color: #aaa; font-size: 0.65rem; padding: 2px 8px; border-radius: 999px; text-decoration: line-through; margin-bottom: 2px; }
+    .badge-add  { display: inline-block; background: #FFF0F3; color: #F0556E; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-bottom: 2px; }
+    .badge-mod  { display: inline-block; background: #fffbe6; color: #b45309; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-bottom: 2px; }
+
+    /* ── 인텐트 카드 ── */
+    .intent-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    .intent-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px 20px;
+      border: 1px solid #f0f0f0;
+    }
+    .intent-card.pink { background: #FFF0F3; border-color: #FFD6DE; }
+    .intent-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .intent-title { font-size: 0.85rem; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; line-height: 1.3; }
+    .intent-body  { font-size: 0.75rem; color: #666; line-height: 1.7; }
+    .intent-body strong { color: #F0556E; font-weight: 700; }
+
+    /* ── 카피 비교 ── */
+    .copy-block {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #f0f0f0;
+      margin-bottom: 12px;
+    }
+    .copy-block-label {
+      padding: 8px 16px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .copy-label-before { background: #f5f5f5; color: #999; }
+    .copy-label-after  { background: #FFF0F3; color: #F0556E; }
+    .copy-text {
+      padding: 14px 16px;
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+    .copy-text.before { color: #aaa; }
+    .copy-text.after  { color: #1a1a2e; font-weight: 500; }
+    .copy-reason {
+      padding: 10px 16px 12px;
+      font-size: 0.72rem;
+      color: #F0556E;
+      background: #fff8f9;
+      border-top: 1px solid #FFE4EA;
+      line-height: 1.6;
+    }
+
+    /* ── 구조 플로우 ── */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: 1fr 24px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    .flow-col { display: flex; flex-direction: column; gap: 6px; }
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 6px;
+    }
+    .flow-item {
+      border-radius: 10px;
+      padding: 9px 13px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .flow-keep   { background: #f5f5f5; color: #555; }
+    .flow-remove { background: #fff0f0; color: #ccc; text-decoration: line-through; opacity: 0.6; }
+    .flow-new    { background: #FFF0F3; color: #F0556E; border: 1px solid #FFD6DE; }
+    .flow-change { background: #fffbe6; color: #92400e; }
+    .flow-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-keep   { background: #ccc; }
+    .dot-remove { background: #fca5a5; }
+    .dot-new    { background: #F0556E; }
+    .dot-change { background: #f59e0b; }
+    .flow-legend {
+      display: flex; gap: 16px; margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.7rem; color: #666;
+    }
+    .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+    /* ── 컬러 비교 ── */
+    .color-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .color-chip {
+      border-radius: 14px;
+      padding: 16px 20px;
+      flex: 1;
+      font-size: 0.78rem;
+    }
+    .color-chip-label { font-weight: 700; margin-bottom: 4px; }
+    .color-chip-hex   { font-size: 0.68rem; opacity: 0.6; font-family: monospace; }
+
+    /* ── 기대효과 ── */
+    .effect-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .effect-card {
+      border-radius: 18px;
+      padding: 22px 22px;
+    }
+    .effect-card.pink  { background: #FFF0F3; border: 1px solid #FFD6DE; }
+    .effect-card.dark  { background: #1A0610; }
+    .effect-num  { font-size: 2rem; font-weight: 900; color: #F0556E; line-height: 1; margin-bottom: 6px; }
+    .effect-label{ font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+    .effect-body { font-size: 0.75rem; line-height: 1.65; opacity: 0.65; }
+    .effect-card.dark .effect-num   { color: #FF8FA3; }
+    .effect-card.dark .effect-label { color: #fff; }
+    .effect-card.dark .effect-body  { color: rgba(255,255,255,0.5); }
+
+    /* ── 마무리 슬라이드 ── */
+    .closing-title { font-size: 2.2rem; font-weight: 900; color: #fff; line-height: 1.25; margin-bottom: 16px; }
+    .closing-title span { color: #FF8FA3; }
+    .closing-points { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .closing-points li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.55;
+    }
+    .closing-points li::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #F0556E; flex-shrink: 0; margin-top: 7px;
+    }
+
+    /* 구분선 */
+    hr.divider { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 18px 0; }
+    hr.divider-dark { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0; }
+
+    /* 슬라이드 헤더 바 */
+    .slide-header-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .chapter-tag {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .chapter-tag.pink { background: #FFF0F3; color: #F0556E; }
+    .chapter-tag.dark { background: rgba(240,85,110,0.15); color: #FF8FA3; }
+    .chapter-tag.gray { background: #f0f0f0; color: #888; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     SLIDE 01 · COVER
+══════════════════════════════════ -->
+<div class="slide slide-cover">
+  <div class="slide-inner">
+    <div class="cover-badge">LANDING PAGE REPORT</div>
+    <h1 class="cover-title">
+      다이렉트결혼준비<br/>
+      <span>랜딩페이지 개선 보고서</span>
+    </h1>
+    <p class="cover-sub">
+      기존 페이지 대비 구조·카피 변경 내용 및 개선 의도 분석<br/>
+      2026. 06
+    </p>
+    <div class="cover-meta">
+      <span class="cover-meta-item">DIRECT WEDDING CONVENTION</span>
+      <span class="cover-meta-item" style="opacity:0.15;">|</span>
+      <span class="cover-meta-item">Performance Marketing · Meta Ads</span>
+    </div>
+  </div>
+  <div class="cover-deco"></div>
+  <span class="slide-num" style="color:rgba(255,255,255,0.3);">01</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 02 · 목차
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag gray">INDEX</span>
+    </div>
+    <div class="section-eyebrow" style="color:#F0556E;">CONTENTS</div>
+    <h2 class="section-title">보고서 구성</h2>
+    <p class="section-desc">기존 페이지와의 비교를 통해 구조·카피 변경 내용과 그 의도를 단계별로 정리합니다.</p>
+    <div class="toc-grid">
+      <div class="toc-item">
+        <div class="toc-num">01</div>
+        <div>
+          <div class="toc-label">개선 배경</div>
+          <div class="toc-sub">기존 페이지의 한계와 개선 방향성</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">02</div>
+        <div>
+          <div class="toc-label">구조 변경</div>
+          <div class="toc-sub">섹션 구성 추가·삭제·재배치 내역</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">03</div>
+        <div>
+          <div class="toc-label">카피 변경</div>
+          <div class="toc-sub">헤드라인·CTA·본문 카피 before/after</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">04</div>
+        <div>
+          <div class="toc-label">섹션별 변경 의도</div>
+          <div class="toc-sub">각 변경의 광고 성과 연결 근거</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">05</div>
+        <div>
+          <div class="toc-label">비주얼 · 컬러 개선</div>
+          <div class="toc-sub">키컬러 변경 및 디자인 방향성</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">06</div>
+        <div>
+          <div class="toc-label">기대 효과 요약</div>
+          <div class="toc-sub">전환율(CPA) 개선 관점 종합 정리</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">02</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 03 · 개선 배경
+══════════════════════════════════ -->
+<div class="slide slide-light">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">01 · 개선 배경</span>
+    </div>
+    <h2 class="section-title">기존 페이지의 한계</h2>
+    <p class="section-desc">기존 랜딩페이지는 정보 전달에 치중되어 있어, 즉각적인 DB 확보(신청 전환)에 취약한 구조였습니다.</p>
+    <div class="intent-grid">
+      <div class="intent-card">
+        <div class="intent-icon">🎯</div>
+        <div class="intent-title">전환 목표 불명확</div>
+        <div class="intent-body">CTA가 "내 맞춤 혜택 확인하기"로 추상적이며, 폼 도달까지 섹션 이동이 많아 <strong>전환 경로가 길었습니다.</strong></div>
+      </div>
+      <div class="intent-card">
+        <div class="intent-icon">📋</div>
+        <div class="intent-title">불필요한 섹션 과다</div>
+        <div class="intent-body">파트너사 슬라이드, 3단계 스텝폼, 3컬럼 대형 푸터 등 <strong>전환에 기여하지 않는 콘텐츠</strong>가 페이지를 길게 만들었습니다.</div>
+      </div>
+      <div class="intent-card pink">
+        <div class="intent-icon">📸</div>
+        <div class="intent-title">후기 신뢰도 부족</div>
+        <div class="intent-body">실제 커플 사진 없이 아이콘·해시태그 기반으로 구성되어 <strong>진정성 전달이 미흡</strong>했습니다.</div>
+      </div>
+    </div>
+    <hr class="divider" style="margin-top: 20px;" />
+    <div style="display:flex; gap: 32px; margin-top: 4px;">
+      <div>
+        <div style="font-size:0.7rem; font-weight:700; color:#888; letter-spacing:0.1em; margin-bottom:6px;">개선 핵심 방향</div>
+        <div style="font-size:0.82rem; font-weight:600; color:#1a1a2e; line-height:1.8;">
+          ① 신청(DB 확보)까지의 경로 단축&nbsp;&nbsp;
+          ② 실 후기·이미지로 신뢰 강화&nbsp;&nbsp;
+          ③ 긴급성 장치로 즉시 전환 유도
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">03</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 04 · 구조 변경 플로우
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">02 · 구조 변경</span>
+    </div>
+    <h2 class="section-title">섹션 구조 Before / After</h2>
+
+    <div class="flow-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#ccc;"></div>유지</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fca5a5;"></div>삭제</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F0556E;"></div>신규 추가</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div>변경</div>
+    </div>
+
+    <div class="flow-grid">
+      <!-- 기존 -->
+      <div class="flow-col">
+        <div style="font-size:0.72rem; font-weight:700; color:#888; letter-spacing:0.08em; margin-bottom:4px;">BEFORE (기존)</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>히어로 — 풀스크린, 스크롤 화살표</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>Trust & Transparency</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>Real Stories — 아이콘·해시태그</div>
+        <div class="flow-item flow-remove"><span class="flow-dot dot-remove"></span>Our Partners — 제휴사 슬라이드</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>Exclusive Benefits — 탭 UI</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>FAQ</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>신청 폼 — 3단계 스텝</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>오시는 길 — 전화·카카오 포함</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>푸터 — 3컬럼 대형</div>
+      </div>
+
+      <!-- 화살표 -->
+      <div class="flow-arrow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0556E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </div>
+
+      <!-- 수정본 -->
+      <div class="flow-col">
+        <div style="font-size:0.72rem; font-weight:700; color:#F0556E; letter-spacing:0.08em; margin-bottom:4px;">AFTER (수정본)</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>히어로 — 높이 축소, 혜택 그리드 추가</div>
+        <div class="flow-item flow-keep"><span class="flow-dot dot-keep"></span>Trust — 카드 디자인 통일</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>Real Reviews — 실제 커플 사진 삽입</div>
+        <div class="flow-item flow-new"><span class="flow-dot dot-new"></span>삭제됨</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>혜택 — 이미지 기반 Gift 카드 5종</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>신청 폼 — 단일 폼 + 캘린더 피커</div>
+        <div class="flow-item flow-new"><span class="flow-dot dot-new"></span>FAQ — 신청폼 이후로 재배치</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>오시는 길 — 지도 iframe, 연락처 제거</div>
+        <div class="flow-item flow-change"><span class="flow-dot dot-change"></span>푸터 — 1줄 컴팩트</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">04</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 05 · 카피 변경 1
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">03 · 카피 변경</span>
+    </div>
+    <h2 class="section-title">헤드라인 · CTA 카피 Before / After</h2>
+
+    <div class="copy-block">
+      <div class="copy-block-label copy-label-before">BEFORE · 히어로 메인 헤드라인</div>
+      <div class="copy-text before">"복잡한 결혼준비, 한 번에 끝내는 법"</div>
+      <div class="copy-block-label copy-label-after">AFTER</div>
+      <div class="copy-text after">"다이렉트 결혼준비 웨딩박람회"</div>
+      <div class="copy-reason">→ 솔루션 약속형 → 이벤트 명확화. 랜딩 목적(박람회 신청)을 첫 화면에서 직접 제시해 이탈 전 전환 의지를 높임.</div>
+    </div>
+
+    <div class="copy-block">
+      <div class="copy-block-label copy-label-before">BEFORE · 히어로 CTA 버튼</div>
+      <div class="copy-text before">"내 맞춤 혜택 확인하기 →"</div>
+      <div class="copy-block-label copy-label-after">AFTER</div>
+      <div class="copy-text after">"박람회 예약하기 →" + 서브: "(박람회 일정 확인하기)"</div>
+      <div class="copy-reason">→ '확인'(소프트) → '예약'(하드 전환)으로 행동 강도 상향. 서브 텍스트로 일정 탐색 니즈도 동시 커버.</div>
+    </div>
+
+    <div class="copy-block">
+      <div class="copy-block-label copy-label-before">BEFORE · 후기 섹션명</div>
+      <div class="copy-text before">"실제 커플들의 이야기"</div>
+      <div class="copy-block-label copy-label-after">AFTER</div>
+      <div class="copy-text after">"100% 실제 방문 고객 후기"</div>
+      <div class="copy-reason">→ 검증 가능한 숫자(100%)와 '방문'이라는 구체적 행동을 명시해 신뢰도를 높이고 의심을 선제 차단.</div>
+    </div>
+  </div>
+  <span class="slide-num">05</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 06 · 카피 변경 2
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">03 · 카피 변경</span>
+    </div>
+    <h2 class="section-title">혜택·긴급성 카피 Before / After</h2>
+
+    <div class="copy-block">
+      <div class="copy-block-label copy-label-before">BEFORE · 혜택 섹션 헤드라인</div>
+      <div class="copy-text before">"지금 등록하면 받는 혜택"</div>
+      <div class="copy-block-label copy-label-after">AFTER</div>
+      <div class="copy-text after">"날 더울 때 방문하시니까, 1년 중 가장 시원하게 혜택 쏩니다."</div>
+      <div class="copy-reason">→ 시즌성을 활용한 감성 카피. '지금 이 시기에 방문하면 더 유리하다'는 인식을 심어 즉시 행동을 유도.</div>
+    </div>
+
+    <div class="copy-block">
+      <div class="copy-block-label copy-label-before">BEFORE · 신청폼 긴급성 장치</div>
+      <div class="copy-text before">없음</div>
+      <div class="copy-block-label copy-label-after">AFTER</div>
+      <div class="copy-text after">🚨 잔여 좌석이 얼마 남지 않았습니다. (깜빡이 효과)</div>
+      <div class="copy-reason">→ 폼 진입 직전 FOMO 자극. 이미 신청 의향이 있는 유저의 이탈을 막는 마지막 허들 제거 장치.</div>
+    </div>
+
+    <div class="copy-block">
+      <div class="copy-block-label copy-label-before">BEFORE · 플로팅 CTA</div>
+      <div class="copy-text before">없음</div>
+      <div class="copy-block-label copy-label-after">AFTER</div>
+      <div class="copy-text after">"지금 신청하면 입장료, 플래너비, 상담비 모두 0원" + "바로 예약하기 →"</div>
+      <div class="copy-reason">→ 스크롤 위치 무관하게 핵심 혜택과 CTA를 항상 노출. 중간 이탈 방지 및 재유입 트리거 역할.</div>
+    </div>
+  </div>
+  <span class="slide-num">06</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 07 · 섹션별 변경 의도
+══════════════════════════════════ -->
+<div class="slide slide-light">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">04 · 변경 의도</span>
+    </div>
+    <h2 class="section-title">섹션별 변경 의도 상세</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>섹션</th>
+          <th>기존</th>
+          <th>수정 & 의도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>히어로</td>
+          <td>풀스크린, 스크롤 유도 화살표<br/>CTA 1개</td>
+          <td><span class="badge-mod">변경</span> 높이 축소 → 혜택 그리드 즉시 노출<br/>폼까지 스크롤 거리 단축</td>
+        </tr>
+        <tr>
+          <td>후기</td>
+          <td>아이콘 플레이스홀더<br/>해시태그, 통계 숫자</td>
+          <td><span class="badge-mod">변경</span> 실제 커플 사진 삽입<br/>자연스러운 구어체 후기로 신뢰 강화</td>
+        </tr>
+        <tr>
+          <td>파트너사</td>
+          <td>무한 슬라이드 로고 영역 존재</td>
+          <td><span class="badge-del">삭제</span> 전환 기여도 낮음<br/>페이지 길이 단축으로 집중도 향상</td>
+        </tr>
+        <tr>
+          <td>혜택</td>
+          <td>5개 탭 UI (탭 전환 필요)</td>
+          <td><span class="badge-mod">변경</span> 이미지 기반 카드 세로 노출<br/>모든 혜택 자동 확인 가능</td>
+        </tr>
+        <tr>
+          <td>신청폼</td>
+          <td>3단계 스텝폼<br/>완료 후 카카오 링크</td>
+          <td><span class="badge-mod">변경</span> 단일 폼 + 방문일 캘린더<br/>노쇼 방지 / 리드 품질 향상</td>
+        </tr>
+        <tr>
+          <td>FAQ</td>
+          <td>신청폼 앞에 위치<br/>카카오 상담 CTA 포함</td>
+          <td><span class="badge-mod">변경</span> 신청폼 뒤로 재배치<br/>신청 후 안심 보강 역할 전환</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">07</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 08 · 폼 구조 변경 상세
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">04 · 변경 의도</span>
+    </div>
+    <h2 class="section-title">신청 폼 구조 변경 — 가장 중요한 개선</h2>
+    <p class="section-desc">DB 수집 품질과 노쇼율에 직접 영향을 미치는 폼 구조를 전면 재설계했습니다.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div style="background:#f9f9f9; border-radius:18px; padding:22px;">
+        <div style="font-size:0.72rem; font-weight:700; color:#aaa; letter-spacing:0.08em; margin-bottom:14px;">BEFORE · 3단계 스텝폼</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:0.78rem; color:#555;">
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #eee;">① 결혼 예정 시기 선택 (4개 보기)</div>
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #eee;">② 이름 · 연락처 입력</div>
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #eee;">③ 완료 → 카카오 상담 유도</div>
+        </div>
+        <div style="margin-top:14px; font-size:0.74rem; color:#f87171; line-height:1.65;">
+          ✗ 단계마다 이탈 발생<br/>
+          ✗ 방문 날짜 미수집 → 노쇼 관리 불가<br/>
+          ✗ 카카오 채널로 이동 유도 → 외부 이탈
+        </div>
+      </div>
+      <div style="background:#FFF5F7; border-radius:18px; padding:22px; border:1px solid #FFD6DE;">
+        <div style="font-size:0.72rem; font-weight:700; color:#F0556E; letter-spacing:0.08em; margin-bottom:14px;">AFTER · 단일 폼</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:0.78rem; color:#333;">
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #FFD6DE;">이름 (한글·영문 유효성 검사)</div>
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #FFD6DE;">휴대폰 번호 (자동 하이픈)</div>
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #FFD6DE;">결혼 예정일 (월 선택 캘린더)</div>
+          <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #FFD6DE;">박람회 방문 희망일 (주말만 선택)</div>
+        </div>
+        <div style="margin-top:14px; font-size:0.74rem; color:#16a34a; line-height:1.65;">
+          ✓ 한 화면 완결 → 이탈 지점 제거<br/>
+          ✓ 방문일 수집 → 노쇼 사전 관리 가능<br/>
+          ✓ 주말 제한 → 실제 방문 가능 DB만 수집
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">08</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 09 · 비주얼 · 컬러 개선
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">05 · 비주얼 개선</span>
+    </div>
+    <h2 class="section-title">키컬러 변경 및 디자인 방향성</h2>
+
+    <div class="color-row">
+      <div class="color-chip" style="background:#fdf9f2; border:1px solid #f0e0c0;">
+        <div class="color-chip-label" style="color:#c9913a;">기존 키컬러 · 골드</div>
+        <div class="color-chip-hex" style="color:#888;">#c9913a / warm ivory bg</div>
+        <div style="margin-top:8px; font-size:0.72rem; color:#888; line-height:1.6;">프리미엄하지만 타겟(2030 예비부부)에게 다소 무겁고 칙칙한 인상. 어두운 배경도 탁한 갈색 계열로 구성.</div>
+      </div>
+      <div style="display:flex; align-items:center; padding:0 10px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="color-chip" style="background:#FFF0F3; border:1px solid #FFD6DE;">
+        <div class="color-chip-label" style="color:#F0556E;">수정 키컬러 · 코랄핑크</div>
+        <div class="color-chip-hex" style="color:#F0556E;">#F0556E / rose ivory bg</div>
+        <div style="margin-top:8px; font-size:0.72rem; color:#888; line-height:1.6;">웨딩 주요 타겟(여성 2030)에 친숙하고 밝은 에너지 전달. 다크 섹션도 딥로즈로 교체해 화사하고 세련된 인상.</div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+      <div style="border-radius:12px; overflow:hidden;">
+        <div style="height:40px; background:linear-gradient(135deg,#1E0818,#2D0F1E);"></div>
+        <div style="padding:8px; font-size:0.68rem; color:#555; background:#f9f9f9;">히어로 배경<br/><span style="color:#aaa;">딥로즈 그라데이션</span></div>
+      </div>
+      <div style="border-radius:12px; overflow:hidden;">
+        <div style="height:40px; background:#FFF5F7;"></div>
+        <div style="padding:8px; font-size:0.68rem; color:#555; background:#f9f9f9;">밝은 섹션<br/><span style="color:#aaa;">#FFF5F7 소프트로즈</span></div>
+      </div>
+      <div style="border-radius:12px; overflow:hidden;">
+        <div style="height:40px; background:linear-gradient(135deg,#F0556E,#FF7A8F);"></div>
+        <div style="padding:8px; font-size:0.68rem; color:#555; background:#f9f9f9;">CTA 버튼<br/><span style="color:#aaa;">핑크 그라데이션</span></div>
+      </div>
+      <div style="border-radius:12px; overflow:hidden;">
+        <div style="height:40px; background:#1A0610;"></div>
+        <div style="padding:8px; font-size:0.68rem; color:#555; background:#f9f9f9;">다크 섹션<br/><span style="color:#aaa;">#1A0610 딥로즈</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px; font-size:0.76rem; color:#555; line-height:1.7; background:#FFF5F7; border-radius:12px; padding:14px 16px; border:1px solid #FFD6DE;">
+      <strong style="color:#F0556E;">디자인 방향성:</strong> 골드 기반의 고급·중후함에서 코랄핑크 기반의 밝고 화사한 웨딩 감성으로 전환. 메타 광고 소재와 랜딩 톤앤매너 일치를 통해 광고→랜딩 전환 시 이질감 최소화.
+    </div>
+  </div>
+  <span class="slide-num">09</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 10 · 기대 효과
+══════════════════════════════════ -->
+<div class="slide slide-light">
+  <div class="slide-inner">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">06 · 기대 효과</span>
+    </div>
+    <h2 class="section-title">전환율(CPA) 개선 관점 종합 정리</h2>
+    <div class="effect-grid">
+      <div class="effect-card pink">
+        <div class="effect-num">↑</div>
+        <div class="effect-label">폼 전환율 개선</div>
+        <div class="effect-body">3단계 스텝 → 단일 폼 전환으로 폼 내 이탈 지점 제거. 유효성 검사와 캘린더 피커로 입력 오류 감소.</div>
+      </div>
+      <div class="effect-card pink">
+        <div class="effect-num">↑</div>
+        <div class="effect-label">DB 리드 품질 향상</div>
+        <div class="effect-body">방문 희망일 수집 + 주말만 선택 제한으로 실제 방문 가능한 고품질 DB만 확보. 노쇼율 감소 기대.</div>
+      </div>
+      <div class="effect-card dark">
+        <div class="effect-num">↓</div>
+        <div class="effect-label">이탈률 감소</div>
+        <div class="effect-body">플로팅 CTA 상시 노출, 긴급성 카피(🚨), 잔여팀 카운터로 중간 이탈 방지 장치 다층화.</div>
+      </div>
+      <div class="effect-card dark">
+        <div class="effect-num">↑</div>
+        <div class="effect-label">신뢰도 제고</div>
+        <div class="effect-body">실제 커플 사진 후기, 구어체 텍스트로 진정성 강화. FAQ를 신청폼 뒤에 배치해 신청 후 불안 해소.</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 11 · 변경 항목 전체 요약표
+══════════════════════════════════ -->
+<div class="slide slide-white">
+  <div class="slide-inner" style="padding-top:40px; padding-bottom:28px;">
+    <div class="slide-header-bar">
+      <span class="chapter-tag pink">SUMMARY</span>
+    </div>
+    <h2 class="section-title" style="margin-bottom:16px;">전체 변경 항목 요약</h2>
+    <table class="compare-table" style="font-size:0.76rem;">
+      <thead>
+        <tr>
+          <th style="width:14%;">구분</th>
+          <th style="width:28%;">기존</th>
+          <th style="width:28%;">수정본</th>
+          <th style="width:30%; background:#FFF0F3; color:#F0556E;">변경 의도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>히어로 카피</td>
+          <td>"복잡한 결혼준비, 한 번에 끝내는 법"</td>
+          <td>"다이렉트 결혼준비 웨딩박람회"</td>
+          <td style="color:#F0556E; font-weight:600;">목적(박람회 신청) 직접 명시</td>
+        </tr>
+        <tr>
+          <td>CTA</td>
+          <td>"내 맞춤 혜택 확인하기"</td>
+          <td>"박람회 예약하기 →"</td>
+          <td style="color:#F0556E; font-weight:600;">행동 강도 상향 (확인→예약)</td>
+        </tr>
+        <tr>
+          <td>파트너 섹션</td>
+          <td>무한 슬라이드 존재</td>
+          <td>삭제</td>
+          <td style="color:#F0556E; font-weight:600;">불필요 이탈 요소 제거</td>
+        </tr>
+        <tr>
+          <td>혜택 UI</td>
+          <td>5개 탭 (탭 전환 필요)</td>
+          <td>이미지 카드 세로 나열</td>
+          <td style="color:#F0556E; font-weight:600;">모든 혜택 자동 노출</td>
+        </tr>
+        <tr>
+          <td>신청폼</td>
+          <td>3단계 스텝폼</td>
+          <td>단일 폼 + 방문일 캘린더</td>
+          <td style="color:#F0556E; font-weight:600;">이탈 제거 + 리드 품질 향상</td>
+        </tr>
+        <tr>
+          <td>FAQ 위치</td>
+          <td>신청폼 앞</td>
+          <td>신청폼 뒤</td>
+          <td style="color:#F0556E; font-weight:600;">신청 전 이탈 방지</td>
+        </tr>
+        <tr>
+          <td>긴급성</td>
+          <td>없음</td>
+          <td>🚨 깜빡이 + 잔여팀 카운터</td>
+          <td style="color:#F0556E; font-weight:600;">FOMO 유발 즉시 전환 유도</td>
+        </tr>
+        <tr>
+          <td>플로팅 CTA</td>
+          <td>없음</td>
+          <td>하단 고정 플로팅 바</td>
+          <td style="color:#F0556E; font-weight:600;">스크롤 중 전환 경로 상시 확보</td>
+        </tr>
+        <tr>
+          <td>키컬러</td>
+          <td>골드 (#c9913a)</td>
+          <td>코랄핑크 (#F0556E)</td>
+          <td style="color:#F0556E; font-weight:600;">타겟 공감대 + 광고 톤 일치</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">11</span>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SLIDE 12 · CLOSING
+══════════════════════════════════ -->
+<div class="slide slide-cover">
+  <div class="slide-inner">
+    <div class="cover-badge">CONCLUSION</div>
+    <h2 class="closing-title">
+      모든 변경은<br/>
+      <span>DB 전환(CPA)</span>을<br/>
+      중심에 두고 설계되었습니다.
+    </h2>
+    <ul class="closing-points">
+      <li>페이지 목적(박람회 신청)을 첫 화면부터 명확히 제시, 방문자의 의사결정 속도를 높였습니다.</li>
+      <li>불필요한 섹션 제거 및 폼 단순화로 전환 경로를 최대한 단축했습니다.</li>
+      <li>실 후기 사진, 긴급성 장치, 플로팅 CTA를 통해 전환 저항 요소를 다층으로 제거했습니다.</li>
+      <li>방문일 수집 폼으로 DB 품질을 높여 노쇼 관리 및 후속 상담 효율을 개선했습니다.</li>
+    </ul>
+  </div>
+  <div class="cover-deco"></div>
+  <span class="slide-num" style="color:rgba(255,255,255,0.3);">12</span>
+</div>
+
+</body>
+</html>
