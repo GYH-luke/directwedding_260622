@@ -658,7 +658,7 @@
       <p class="flex items-center gap-2 text-sm font-extrabold mb-5" style="color:#FFB3C1;">
         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 8-12h-6z"/></svg>
         이번 주 등록 300팀 한정
-        <span class="font-semibold" style="color:rgba(255,255,255,0.42);">현재 219팀 등록 완료 · 잔여 81팀</span>
+        <span class="font-semibold" style="color:rgba(255,255,255,0.42);">현재 <span id="instantDone">277</span>팀 등록 완료 · 잔여 <span id="instantRemain">23</span>팀</span>
       </p>
       <a href="#registration" class="inline-flex items-center justify-center gap-2 rounded px-7 py-3.5 text-sm font-extrabold" style="background:linear-gradient(135deg,#F0556E,#FF7A8F); color:#fff;">
         지금 사전등록하기
@@ -744,8 +744,8 @@
   <div class="partner-panel active">
     <div class="partner-marquee">
       <div class="partner-marquee-track" style="--partner-width:1840px;">
-        <img src="images/partners/partners-weddinghall.png" alt="웨딩홀 제휴업체 리스트" class="partner-strip" />
-        <img src="images/partners/partners-weddinghall.png" alt="" class="partner-strip" aria-hidden="true" />
+        <img src="images/partners-weddinghall.png" alt="웨딩홀 제휴업체 리스트" class="partner-strip" />
+        <img src="images/partners-weddinghall.png" alt="" class="partner-strip" aria-hidden="true" />
       </div>
     </div>
   </div>
@@ -753,8 +753,8 @@
   <div class="partner-panel">
     <div class="partner-marquee">
       <div class="partner-marquee-track" style="--partner-width:1840px;">
-        <img src="images/partners/partners-studio.png" alt="스튜디오 제휴업체 리스트" class="partner-strip" />
-        <img src="images/partners/partners-studio.png" alt="" class="partner-strip" aria-hidden="true" />
+        <img src="images/partners-studio.png" alt="스튜디오 제휴업체 리스트" class="partner-strip" />
+        <img src="images/partners-studio.png" alt="" class="partner-strip" aria-hidden="true" />
       </div>
     </div>
   </div>
@@ -762,8 +762,8 @@
   <div class="partner-panel">
     <div class="partner-marquee">
       <div class="partner-marquee-track" style="--partner-width:1840px;">
-        <img src="images/partners/partners-dress.png" alt="드레스 제휴업체 리스트" class="partner-strip" />
-        <img src="images/partners/partners-dress.png" alt="" class="partner-strip" aria-hidden="true" />
+        <img src="images/partners-dress.png" alt="드레스 제휴업체 리스트" class="partner-strip" />
+        <img src="images/partners-dress.png" alt="" class="partner-strip" aria-hidden="true" />
       </div>
     </div>
   </div>
@@ -771,8 +771,8 @@
   <div class="partner-panel">
     <div class="partner-marquee">
       <div class="partner-marquee-track" style="--partner-width:1840px;">
-        <img src="images/partners/partners-makeup.png" alt="메이크업 제휴업체 리스트" class="partner-strip" />
-        <img src="images/partners/partners-makeup.png" alt="" class="partner-strip" aria-hidden="true" />
+        <img src="images/partners-makeup.png" alt="메이크업 제휴업체 리스트" class="partner-strip" />
+        <img src="images/partners-makeup.png" alt="" class="partner-strip" aria-hidden="true" />
       </div>
     </div>
   </div>
@@ -1369,6 +1369,7 @@
   document.getElementById('eventDate').textContent = getEventDates();
 
   // ─── 잔여 팀 카운터 ──────────────────────────────────────────────
+  const REM_TOTAL = 300;
   const REM_START = 23;
   const REM_MIN   = 7;
   const REM_STEP  = 40000;
@@ -1387,10 +1388,14 @@
 
   const remainEl  = document.getElementById('regRemain');
   const floatEl   = document.getElementById('floatRemain');
+  const instantRemainEl = document.getElementById('instantRemain');
+  const instantDoneEl   = document.getElementById('instantDone');
 
   function syncRemain(val) {
     remainEl.textContent = val;
     if (floatEl) floatEl.textContent = val;
+    if (instantRemainEl) instantRemainEl.textContent = val;
+    if (instantDoneEl) instantDoneEl.textContent = REM_TOTAL - val;
   }
 
   syncRemain(calcRemaining());
