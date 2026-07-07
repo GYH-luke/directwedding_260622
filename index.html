@@ -337,8 +337,11 @@
       text-align: right;
       white-space: nowrap;
     }
+    .instant-benefit-row p {
+      min-width: 0;
+    }
     .instant-benefit-summary {
-      margin-top: 1.15rem;
+      margin-bottom: 1.15rem;
       min-height: 6.2rem;
       display: flex;
       align-items: center;
@@ -351,6 +354,9 @@
       color: #FFB3C1;
       font-weight: 900;
       letter-spacing: -0.02em;
+    }
+    .instant-benefit-summary + .instant-benefit-row {
+      border-top: 1px solid rgba(255,255,255,0.075);
     }
     .instant-benefit-limit {
       border: 1px solid rgba(255,143,163,0.22);
@@ -370,6 +376,9 @@
       }
     }
     @media (max-width: 640px) {
+      .instant-benefits {
+        padding-bottom: calc(11rem + env(safe-area-inset-bottom)) !important;
+      }
       .instant-benefits-title {
         font-size: clamp(2rem, 11vw, 3rem) !important;
       }
@@ -383,21 +392,69 @@
         min-width: 8.9rem;
         height: 2.45rem;
       }
+      .instant-benefit-card {
+        padding: 1.45rem 1.25rem !important;
+      }
       .instant-benefit-row {
+        grid-template-columns: 2.75rem minmax(0, 1fr) auto;
         gap: 0.8rem;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        min-height: 4.15rem;
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+      }
+      .instant-benefit-row > p:nth-child(2) {
+        font-size: 0.96rem;
+        line-height: 1.35;
       }
       .instant-benefit-value {
+        grid-column: auto;
+        text-align: right;
         font-size: 1rem !important;
+        line-height: 1.25;
+        white-space: nowrap;
+      }
+      .instant-benefit-icon {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 0.8rem;
+      }
+      .instant-benefit-summary {
+        align-items: center;
+        flex-direction: row;
+        min-height: auto;
+        margin-bottom: 0.95rem;
+        padding: 1.2rem 1.05rem !important;
+      }
+      .instant-benefit-total {
+        flex-shrink: 0;
+        font-size: 1.55rem !important;
+        line-height: 1.15;
+        text-align: right;
+        white-space: nowrap;
+      }
+      .instant-benefit-limit {
+        padding: 1.25rem !important;
+      }
+      .instant-benefit-limit p {
+        align-items: flex-start;
+        line-height: 1.45;
+      }
+    }
+    @media (max-width: 390px) {
+      .instant-benefit-row {
+        grid-template-columns: 2.5rem minmax(0, 1fr);
+      }
+      .instant-benefit-value {
+        grid-column: 2;
+        text-align: left;
+        white-space: normal;
       }
       .instant-benefit-summary {
         align-items: flex-start;
         flex-direction: column;
-        min-height: auto;
       }
       .instant-benefit-total {
-        font-size: 2rem !important;
+        text-align: left;
       }
     }
   </style>
@@ -526,6 +583,10 @@
 
     <div class="instant-benefit-panel active">
       <div class="instant-benefit-card rounded-lg px-7 md:px-10 py-8">
+        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
+          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">사전등록 기프트 총액</p>
+          <p class="instant-benefit-total" style="font-size:2.2rem;">35만 원 상당</p>
+        </div>
         <div class="instant-benefit-row">
           <span class="instant-benefit-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 19V6l8-3 8 3v13l-8 3z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">결혼준비 가이드북</p>
@@ -546,15 +607,15 @@
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">현장 사은품 세트</p>
           <p class="instant-benefit-value text-xl">무료</p>
         </div>
-        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
-          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">사전등록 기프트 총액</p>
-          <p class="instant-benefit-total" style="font-size:2.2rem;">35만 원 상당</p>
-        </div>
       </div>
     </div>
 
     <div class="instant-benefit-panel">
       <div class="instant-benefit-card rounded-lg px-7 md:px-10 py-8">
+        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
+          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">스드메 최대 절약</p>
+          <p class="instant-benefit-total" style="font-size:2.2rem;">65%</p>
+        </div>
         <div class="instant-benefit-row">
           <span class="instant-benefit-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 8h4l2-3h4l2 3h4v11H4z"/><circle cx="12" cy="13.5" r="3"/></svg></span>
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">스튜디오 촬영</p>
@@ -575,15 +636,15 @@
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">본식 스냅 쿠폰</p>
           <p class="instant-benefit-value text-xl">최대 15%↓</p>
         </div>
-        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
-          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">스드메 최대 절약</p>
-          <p class="instant-benefit-total" style="font-size:2.2rem;">65%</p>
-        </div>
       </div>
     </div>
 
     <div class="instant-benefit-panel">
       <div class="instant-benefit-card rounded-lg px-7 md:px-10 py-8">
+        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
+          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">웨딩홀 최대 절약</p>
+          <p class="instant-benefit-total" style="font-size:2.45rem;">150만 원</p>
+        </div>
         <div class="instant-benefit-row">
           <span class="instant-benefit-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-7h6v7"/><path d="M7 11h2M15 11h2"/></svg></span>
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">500개+ 무료 섭외</p>
@@ -599,15 +660,15 @@
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">캐시백 혜택</p>
           <p class="instant-benefit-value text-xl">10만 원</p>
         </div>
-        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
-          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">웨딩홀 최대 절약</p>
-          <p class="instant-benefit-total" style="font-size:2.45rem;">150만 원</p>
-        </div>
       </div>
     </div>
 
     <div class="instant-benefit-panel">
       <div class="instant-benefit-card rounded-lg px-7 md:px-10 py-8">
+        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
+          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">혼수 최대 절약</p>
+          <p class="instant-benefit-total" style="font-size:2.2rem;">5%+</p>
+        </div>
         <div class="instant-benefit-row">
           <span class="instant-benefit-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="m12 3 8 8-8 10-8-10z"/><path d="M4 11h16"/></svg></span>
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">예물</p>
@@ -628,15 +689,15 @@
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">가전(삼성,LG)</p>
           <p class="instant-benefit-value text-xl">최대 3%+@ 할인혜택</p>
         </div>
-        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
-          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">혼수 최대 절약</p>
-          <p class="instant-benefit-total" style="font-size:2.2rem;">5%+</p>
-        </div>
       </div>
     </div>
 
     <div class="instant-benefit-panel">
       <div class="instant-benefit-card rounded-lg px-7 md:px-10 py-8">
+        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
+          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">추가 혜택</p>
+          <p class="instant-benefit-total" style="font-size:2.2rem;">VIP 전용</p>
+        </div>
         <div class="instant-benefit-row">
           <span class="instant-benefit-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3"/><path d="M8 11c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3"/><path d="M3 20c.8-3.2 2.6-5 5-5s4.2 1.8 5 5"/><path d="M11 20c.8-3.2 2.6-5 5-5s4.2 1.8 5 5"/></svg></span>
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">각종 제휴업체 이벤트, 행사</p>
@@ -646,10 +707,6 @@
           <span class="instant-benefit-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 3 20 7v10l-8 4-8-4V7z"/><path d="M12 12 4 7"/><path d="m12 12 8-5"/><path d="M12 12v9"/></svg></span>
           <p class="font-bold" style="color:rgba(255,255,255,0.76);">업체별 사은품</p>
           <p class="instant-benefit-value text-xl">박람회 현장지급</p>
-        </div>
-        <div class="instant-benefit-summary rounded-lg px-6 md:px-8 py-6">
-          <p class="text-sm font-extrabold" style="color:rgba(255,255,255,0.58);">추가 혜택</p>
-          <p class="instant-benefit-total" style="font-size:2.2rem;">VIP 전용</p>
         </div>
       </div>
     </div>
